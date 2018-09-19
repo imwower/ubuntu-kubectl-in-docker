@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo
+  namespace: base
+data:
+  27017: "base/mongo:27017"
