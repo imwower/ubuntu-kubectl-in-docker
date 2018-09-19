@@ -5,3 +5,4 @@ metadata:
   namespace: base
 data:
   5000: "base/registry:5000"
+  88: "base/nginx:88"
