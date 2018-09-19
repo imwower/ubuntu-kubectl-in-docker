@@ -1,3 +1,5 @@
+FROM ubuntu
+
 # Install Docker
 RUN apt-get -qq update && \
     apt-get -qq -y install curl && \
