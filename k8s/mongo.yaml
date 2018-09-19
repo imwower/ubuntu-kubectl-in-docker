@@ -13,4 +13,4 @@ spec:
       - path: /
         backend:
           serviceName: mongo
-          servicePort: 8080
+          servicePort: 27017
