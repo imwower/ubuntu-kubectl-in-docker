@@ -1,7 +1,8 @@
 FROM ubuntu
 
-# Install Docker
+# Install Docker and git
 RUN apt-get -qq update && \
+    apt-get -qq -y install git && \
     apt-get -qq -y install curl && \
     curl -sSL https://get.docker.com/ | sh
 
