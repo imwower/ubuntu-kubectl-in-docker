@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tcp-service-registry
+  name: tcp-services
   namespace: base
 data:
   5000: "base/registry:5000"
