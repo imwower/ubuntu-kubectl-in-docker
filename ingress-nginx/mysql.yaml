@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: udp-service-mongo
+  name: udp-service-mysql
   namespace: base
 data:
-  27017: "base/mongo:27017"
+  27017: "base/mysql:3306"
