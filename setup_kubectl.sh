@@ -4,3 +4,5 @@ kubectl config set-credentials user --token="$(cat /var/run/secrets/kubernetes.i
 kubectl config set-context default --cluster=dev --user=user
 kubectl config use-context default
 echo "finished set up kubectl."
+
+/bin/bash
