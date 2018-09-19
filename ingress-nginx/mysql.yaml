@@ -4,4 +4,4 @@ metadata:
   name: udp-service-mysql
   namespace: base
 data:
-  27017: "base/mysql:3306"
+  3306: "base/mysql:3306"
