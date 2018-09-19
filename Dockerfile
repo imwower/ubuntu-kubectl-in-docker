@@ -1,7 +1,13 @@
 FROM ubuntu
 
 # Install Docker and git
-RUN apt-get install -y  apt-transport-https  ca-certificates curl software-properties-common git
+RUN apt-get install -y \
+           apt-transport-https \
+           ca-certificates \
+           curl \
+           software-properties-common \
+           git
+
 RUN curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository \
        "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
