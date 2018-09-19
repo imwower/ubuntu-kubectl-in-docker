@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mongo
+  name: tcp-services
   namespace: base
 data:
   27017: "base/mongo:27017"
