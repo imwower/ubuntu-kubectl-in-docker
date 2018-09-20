@@ -4,6 +4,9 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
-  27017: "base/mongo:27017"
   88: "base/nginx:80"
+  22: "base/kubectl:22"
+  3306: "base/mysql:3306"
   5000: "base/registry:5000"
+  8080: "base/jenkins:8080"
+  27017: "base/mongo:27017"
