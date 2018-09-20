@@ -5,4 +5,3 @@ metadata:
   namespace: ingress-nginx
 data:
   27017: "base/mongo:27017"
-  3306: "base/mysql:3306"

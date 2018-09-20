@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tcp-services
+  name: udp-services
   namespace: ingress-nginx
 data:
-  88: "base/nginx:80"
+  53: "kube-system/kube-dns:53"
