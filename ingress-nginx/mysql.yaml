@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: udp-service-mysql
+  name: udp-services
   namespace: base
 data:
   3306: "base/mysql:3306"
