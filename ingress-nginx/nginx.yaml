@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
-  5000: "base/registry:5000"
+  80: "base/nginx:80"
