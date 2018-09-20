@@ -4,6 +4,8 @@ FROM ubuntu
 RUN apt-get -qq update && \
     apt-get -qq -y install git && \
     apt-get -qq -y install curl && \
+    apt-get -qq -y install wget && \
+    apt-get -qq -y install curl && \
     curl -sSL https://get.docker.com/ | sh
 
 # Install kubectl and helm
