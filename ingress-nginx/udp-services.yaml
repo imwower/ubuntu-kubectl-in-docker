@@ -4,3 +4,4 @@ metadata:
   name: udp-services
   namespace: base
 data:
+  53: "kube-system/kube-dns:53"
