@@ -4,6 +4,7 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
+  53: "kube-system/kube-dns:53"
   88: "base/nginx:80"
   22: "base/kubectl:22"
   3306: "base/mysql:3306"
