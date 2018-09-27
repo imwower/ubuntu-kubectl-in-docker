@@ -1,6 +1,6 @@
 FROM ubuntu
 
-ENV VERSION=v2.9.0
+ENV VERSION v2.9.0
 
 # Install Docker and git
 RUN apt-get -qq update && \
@@ -16,8 +16,8 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 #Install helm
-RUN curl https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz && \
-    tar -zxvf helm-$VERSION}-linux-amd64.tar.gz && \
+RUN curl https://storage.googleapis.com/kubernetes-helm/helm-$VERSION-linux-amd64.tar.gz && \
+    tar -zxvf helm-$VERSION-linux-amd64.tar.gz && \
     mv linux-amd64/helm /usr/local/bin/
 
 CMD ["/bin/bash"]
