@@ -9,6 +9,6 @@ data:
   3306: "base/mysql:3306"
   5000: "base/registry:5000"
   8080: "base/jenkins:8080"
-  8153:"base/gocd:8153"
-  8154:"base/gocd:8154"
+  8153: "base/gocd:8153"
+  8154: "base/gocd:8154"
   27017: "base/mongo:27017"
