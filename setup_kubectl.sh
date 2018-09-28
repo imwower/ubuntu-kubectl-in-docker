@@ -8,6 +8,17 @@ echo "finished set up kubectl."
 # must mount volume
 kubectl apply -f /opt/kubectl/ubuntu-kubectl-in-docker/ingress-nginx/tcp-services.yaml
 # origin url
-kubectl apply -f https://raw.githubusercontent.com/imwower/ubuntu-kubectl-in-docker/master/ingress-nginx/tcp-services.yaml
+#kubectl apply -f https://raw.githubusercontent.com/imwower/ubuntu-kubectl-in-docker/master/ingress-nginx/tcp-services.yaml
 
+# helm init
+docker pull huwanyang168/tiller:v2.8.0
+docker tag huwanyang168/tiller:v2.8.0 gcr.io/kubernetes-helm/tiller:v2.8.0
+
+helm init
+helm version
+
+#helm install spinnaker
+helm install -n spinnaker stable/spinnaker -f /opt/kubectl/ubuntu-kubectl-in-docker/k8s/spinnaker/values.yaml --namespace spinnaker
+
+#start bash
 /bin/bash
