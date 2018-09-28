@@ -12,7 +12,6 @@ RUN apt-get -qq update && \
 # Install kubectl and helm
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
-    mv ./kubectl /usr/local/bin/kubectl && \
-    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+    mv ./kubectl /usr/local/bin/kubectl
 
 CMD ["/bin/bash"]
