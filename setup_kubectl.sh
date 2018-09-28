@@ -13,7 +13,7 @@ kubectl apply -f /opt/kubectl/ubuntu-kubectl-in-docker/ingress-nginx/tcp-service
 # helm init
 docker pull jessestuart/tiller:v2.9.1
 
-helm init --upgrade --tiller-image jessestuart/tiller:v2.9.1 --stable-repo-url https://github.com/imwower/charts
+helm init --upgrade --tiller-image jessestuart/tiller:v2.9.1 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 helm version
 
 #helm install spinnaker
