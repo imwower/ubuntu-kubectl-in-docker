@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cicd
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: executor
+  namespace: cicd
+imagePullSecrets:
+- name: dockersecret
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: cicd
+  name: executor-role
+rules:
+# runner 要新建 pod，所以为它赋予 pod 相关的权限
+- apiGroups: [""]
+  resources: ["pods", "pods/exec"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: cicd
+  name: executor-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: executor
+  namespace: cicd
+roleRef:
+  kind: Role
+  name: executor
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: cicd
+  labels:
+    app: gitlab-deployer
+  name: gitlab-runner-cm
+data:
+  # 具体可用的参数配置以及环境变量配置可以运行 gitlab-runner register --help 查看
+  REGISTER_NON_INTERACTIVE: "true"
+  REGISTER_LOCKED: "false"
+  CI_SERVER_URL: "http://gitlab.web/"
+  METRICS_SERVER: "0.0.0.0:9100"
+  RUNNER_CONCURRENT_BUILDS: "4"
+  RUNNER_REQUEST_CONCURRENCY: "4"
+  RUNNER_TAG_LIST: "kubernetes,gitlab-runner"
+  RUNNER_EXECUTOR: "kubernetes"
+  KUBERNETES_NAMESPACE: "cicd"
+  KUBERNETES_SERVICE_ACCOUNT: "executor"
+  KUBERNETES_PULL_POLICY: "if-not-present"
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: runner
+  namespace: cicd
+  labels:
+    app: runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: runner
+  template:
+    metadata:
+      labels:
+        app: runner
+    spec:
+      containers:
+      - name: ci-builder
+        image: gitlab/gitlab-runner:latest
+        command:
+        # 命令有点长，做了以下几步：注销当前的 runner name 以防止 runner 冲突；注册新的 runner；启动 runner daemon
+        - /bin/bash
+        - -c
+        - "/usr/bin/gitlab-runner unregister -n $RUNNER_NAME || true; /usr/bin/gitlab-runner register; exec /usr/bin/gitlab-runner run"
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        # 通过 ConfigMap 注入 runner 配置
+        - configMapRef:
+            name: gitlab-runner-cm
+        env:
+        # 通过 Secret 注入与 GitLab 实例进行交互所用的 CI Token
+        # runner 命令会自动从环境变量中读取这个 token，用于注册 runner
+        - name: CI_SERVER_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: gitlab-ci-token
+              key: token
+        # 动态注入环境变量，使用 pod name 作为 runner name
+        # 刚查了一下文档，如果不通过环境变量指定 runner name 的话，会用当前环境的 hostname，也就是 pod name 来做 runner name
+        # 那完全没必要把这个 pod name 注册进去嘛…
+        - name: RUNNER_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        # gitlab-runner 自带 Prometheus metrics server，通过上面的 METRICS_SERVER 环境变量配置
+        # 强的一比！
+        ports:
+        - containerPort: 9100
+          name: http-metrics
+          protocol: TCP
+        lifecycle:
+          # 在 pod 停止前，注销这个 runner
+          preStop:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - "/usr/bin/gitlab-runner unregister -n $RUNNER_NAME"
+      restartPolicy: Always
