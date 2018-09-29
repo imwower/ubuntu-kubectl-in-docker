@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-6mq5q
+    field.cattle.io/ipAddresses: "null"
+    field.cattle.io/targetDnsRecordIds: "null"
+    field.cattle.io/targetWorkloadIds: "null"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"field.cattle.io/creatorId":"user-6mq5q","field.cattle.io/ipAddresses":"null","field.cattle.io/targetDnsRecordIds":"null","field.cattle.io/targetWorkloadIds":"null"},"creationTimestamp":null,"name":"jenkins","namespace":"web","selfLink":"/api/v1/namespaces/web/services/jenkins"},"spec":{"externalName":"10.40.20.2","ports":[{"name":"default","port":42,"protocol":"TCP","targetPort":42}],"sessionAffinity":"None","type":"ExternalName"},"status":{"loadBalancer":{}}}
+  creationTimestamp: null
+  name: jenkins
+  selfLink: /api/v1/namespaces/web/services/jenkins
+spec:
+  externalName: 10.40.20.2
+  ports:
+  - name: default
+    port: 42
+    protocol: TCP
+    targetPort: 42
+  sessionAffinity: None
+  type: ExternalName
+status:
+  loadBalancer: {}

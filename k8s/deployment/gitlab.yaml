@@ -1,0 +1,84 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    field.cattle.io/creatorId: user-js6v2
+    field.cattle.io/publicEndpoints: '[{"addresses":["10.40.20.2"],"port":80,"protocol":"HTTP","serviceName":"base:gitlab","ingressName":"base:gitlab","hostname":"gitlab.web","allNodes":true}]'
+  creationTimestamp: null
+  generation: 1
+  labels:
+    workload.user.cattle.io/workloadselector: deployment-base-gitlab
+  name: gitlab
+  selfLink: /apis/apps/v1beta2/namespaces/base/deployments/gitlab
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-base-gitlab
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":443,"dnsName":"gitlab","kind":"ClusterIP","name":"443tcp4432","protocol":"TCP","sourcePort":443},{"containerPort":80,"dnsName":"gitlab","kind":"ClusterIP","name":"80tcp802","protocol":"TCP","sourcePort":80},{"containerPort":22,"dnsName":"gitlab","kind":"ClusterIP","name":"22tcp222","protocol":"TCP","sourcePort":22}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-base-gitlab
+    spec:
+      affinity: {}
+      containers:
+      - image: gitlab/gitlab-ce
+        imagePullPolicy: Always
+        name: gitlab
+        ports:
+        - containerPort: 443
+          name: 443tcp4432
+          protocol: TCP
+        - containerPort: 80
+          name: 80tcp802
+          protocol: TCP
+        - containerPort: 22
+          name: 22tcp222
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /etc/gitlab
+          name: vol1
+        - mountPath: /var/log/gitlab
+          name: vol2
+        - mountPath: /var/opt/gitlab
+          name: vol3
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /mnt/sda1/rancher/gitlab_data/config
+          type: DirectoryOrCreate
+        name: vol1
+      - hostPath:
+          path: /mnt/sda1/rancher/gitlab_data/logs
+          type: ""
+        name: vol2
+      - hostPath:
+          path: /mnt/sda1/rancher/gitlab_data/data
+          type: ""
+        name: vol3
+status: {}

@@ -1,0 +1,75 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "3"
+    field.cattle.io/creatorId: user-js6v2
+  creationTimestamp: null
+  generation: 1
+  labels:
+    workload.user.cattle.io/workloadselector: deployment-base-gocd
+  name: gocd
+  selfLink: /apis/apps/v1beta2/namespaces/base/deployments/gocd
+spec:
+  paused: true
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-base-gocd
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":8153,"dnsName":"gocd","kind":"ClusterIP","name":"8153tcp81532","protocol":"TCP","sourcePort":8153},{"containerPort":8154,"dnsName":"gocd","kind":"ClusterIP","name":"8154tcp81542","protocol":"TCP","sourcePort":8154}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-base-gocd
+    spec:
+      affinity: {}
+      containers:
+      - image: gocd/gocd-server:v18.9.0
+        imagePullPolicy: Always
+        name: gocd
+        ports:
+        - containerPort: 8153
+          name: 8153tcp81532
+          protocol: TCP
+        - containerPort: 8154
+          name: 8154tcp81542
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /godata
+          name: vol1
+        - mountPath: /home/go
+          name: vol2
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /mnt/sda1/rancher/gocd_data
+          type: DirectoryOrCreate
+        name: vol1
+      - hostPath:
+          path: /home/dev
+          type: DirectoryOrCreate
+        name: vol2
+status: {}

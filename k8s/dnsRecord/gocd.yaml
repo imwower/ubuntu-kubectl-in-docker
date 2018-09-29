@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-js6v2
+    field.cattle.io/ipAddresses: '["10.40.20.2"]'
+    field.cattle.io/targetDnsRecordIds: "null"
+    field.cattle.io/targetWorkloadIds: "null"
+  creationTimestamp: null
+  name: gocd
+  selfLink: /api/v1/namespaces/web/services/gocd
+spec:
+  clusterIP: None
+  ports:
+  - name: default
+    port: 42
+    protocol: TCP
+    targetPort: 42
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

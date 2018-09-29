@@ -6,6 +6,7 @@ metadata:
     app: gitlab-deployer
   name: gitlab-runner-cm
 data:
+  # 具体可用的参数配置以及环境变量配置可以运行 gitlab-runner register --help 查看
   REGISTER_NON_INTERACTIVE: "true"
   REGISTER_LOCKED: "false"
   CI_SERVER_URL: "http://gitlab.web/"

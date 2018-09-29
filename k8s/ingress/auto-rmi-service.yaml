@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-6mq5q
+    field.cattle.io/ingressState: '{"YXV0by1ybWktc2VydmljZS9zZXJ2aWNlL2F1dG8tcm1pLXNlcnZpY2Uud2ViLy84MDgw":""}'
+    field.cattle.io/publicEndpoints: '[{"addresses":["10.40.20.2"],"port":80,"protocol":"HTTP","serviceName":"service:auto-rmi-service","ingressName":"service:auto-rmi-service","hostname":"auto-rmi-service.web","allNodes":true}]'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"field.cattle.io/creatorId":"user-6mq5q","field.cattle.io/ingressState":"{\"YXV0by1ybWktc2VydmljZS9zZXJ2aWNlL2F1dG8tcm1pLXNlcnZpY2Uud2ViLy84MDgw\":\"\"}","field.cattle.io/publicEndpoints":"[{\"addresses\":[\"10.40.20.2\"],\"port\":80,\"protocol\":\"HTTP\",\"serviceName\":\"service:auto-rmi-service\",\"ingressName\":\"service:auto-rmi-service\",\"hostname\":\"auto-rmi-service.web\",\"allNodes\":true}]"},"creationTimestamp":null,"generation":1,"name":"auto-rmi-service","namespace":"service","selfLink":"/apis/extensions/v1beta1/namespaces/service/ingresses/auto-rmi-service"},"spec":{"rules":[{"host":"auto-rmi-service.web","http":{"paths":[{"backend":{"serviceName":"auto-rmi-service","servicePort":8080}}]}}]},"status":{"loadBalancer":{}}}
+  creationTimestamp: null
+  generation: 1
+  name: auto-rmi-service
+  selfLink: /apis/extensions/v1beta1/namespaces/service/ingresses/auto-rmi-service
+spec:
+  rules:
+  - host: auto-rmi-service.web
+    http:
+      paths:
+      - backend:
+          serviceName: auto-rmi-service
+          servicePort: 8080
+status:
+  loadBalancer: {}

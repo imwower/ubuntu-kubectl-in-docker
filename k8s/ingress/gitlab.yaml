@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-js6v2
+    field.cattle.io/ingressState: '{"Z2l0bGFiL2Jhc2UvZ2l0bGFiLndlYi8vODA=":""}'
+    field.cattle.io/publicEndpoints: '[{"addresses":["10.40.20.2"],"port":80,"protocol":"HTTP","serviceName":"base:gitlab","ingressName":"base:gitlab","hostname":"gitlab.web","allNodes":true}]'
+  creationTimestamp: null
+  generation: 1
+  name: gitlab
+  selfLink: /apis/extensions/v1beta1/namespaces/base/ingresses/gitlab
+spec:
+  rules:
+  - host: gitlab.web
+    http:
+      paths:
+      - backend:
+          serviceName: gitlab
+          servicePort: 80
+status:
+  loadBalancer: {}
