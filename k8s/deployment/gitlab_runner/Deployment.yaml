@@ -31,7 +31,7 @@ spec:
         env:
         # 通过 Secret 注入与 GitLab 实例进行交互所用的 CI Token
         # runner 命令会自动从环境变量中读取这个 token，用于注册 runner
-        - name: CI_SERVER_TOKEN
+        - name: REGISTRATION_TOKEN
           valueFrom:
             secretKeyRef:
               name: gitlab-ci-token
